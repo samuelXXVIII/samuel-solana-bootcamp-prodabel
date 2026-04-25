@@ -1,0 +1,42 @@
+use anchor_lang::prelude::*;
+
+declare_id!("2GWJNatGfyBNEnRrp3PAm91ZAYNr46qGkm96Y5xj5x3D");
+
+#[program]
+pub mod contador {
+    use super::*;
+
+    pub fn inicializar(ctx: Context<Inicializar>) -> Result<()> {
+        let contador = &mut ctx.accounts.contador;
+        contador.valor = 0;
+        msg!("Contador criado com valor: {}", contador.valor);
+        Ok(())
+    }
+
+    pub fn incrementar(ctx: Context<Incrementar>) -> Result<()> {
+        let contador = &mut ctx.accounts.contador;
+        contador.valor += 1;
+        msg!("Contador incrementado para: {}", contador.valor);
+        Ok(())
+    }
+}
+
+#[derive(Accounts)]
+pub struct Inicializar<'info> {
+    #[account(init, payer = usuario, space = 8 + 8)]
+    pub contador: Account<'info, Contador>,
+    #[account(mut)]
+    pub usuario: Signer<'info>,
+    pub system_program: Program<'info, System>,
+}
+
+#[derive(Accounts)]
+pub struct Incrementar<'info> {
+    #[account(mut)]
+    pub contador: Account<'info, Contador>,
+}
+
+#[account]
+pub struct Contador {
+    pub valor: u64,
+}
