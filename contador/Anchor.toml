@@ -1,5 +1,5 @@
 [toolchain]
-package_manager = "yarn"
+package_manager = "npm"
 
 [features]
 resolution = true
@@ -13,6 +13,7 @@ cluster = "localnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]
-test = "cargo test"
+test = "npm run test"
 
-[hooks]
+[surfpool]
+startup_wait = 30000
