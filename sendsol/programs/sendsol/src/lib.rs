@@ -29,6 +29,7 @@ pub mod sendsol {
             &[
                 ctx.accounts.de.to_account_info(),
                 ctx.accounts.para.to_account_info(),
+                ctx.accounts.system_program.to_account_info(),
             ],
         )?;
         msg!("Transferido {} lamports para @{}", valor, ctx.accounts.conta_destino.nome);
@@ -58,8 +59,9 @@ pub struct Transferir<'info> {
     pub de: Signer<'info>,
     /// CHECK: endereço validado pela conta_destino
     #[account(mut)]
-    pub para: AccountInfo<'info>,
+    pub para: UncheckedAccount<'info>,
     pub conta_destino: Account<'info, ContaUsuario>,
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
