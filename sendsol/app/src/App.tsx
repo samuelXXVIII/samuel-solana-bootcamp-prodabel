@@ -1,19 +1,46 @@
 import { useState } from "react"
+import { Connection, PublicKey, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js"
 import "./App.css"
+
+declare global {
+  interface Window { solana?: any }
+}
 
 function App() {
   const [aba, setAba] = useState("enviar")
+  const [carteira, setCarteira] = useState("")
   const [nome, setNome] = useState("")
   const [valor, setValor] = useState("")
   const [destinatario, setDestinatario] = useState("")
   const [status, setStatus] = useState("")
+  const [saldo, setSaldo] = useState(0)
+
+  const conectar = async () => {
+    try {
+      const { solana } = window
+      if (!solana) { setStatus("Instale a carteira Phantom"); return }
+      const response = await solana.connect()
+      const pubkey = response.publicKey.toString()
+      setCarteira(pubkey)
+      setSaldo(0)
+      setStatus("")
+    } catch (e) {
+      console.error("Erro detalhado:", e); setStatus("Erro: " + String(e))
+    }
+  }
 
   const registrar = () => {
+    if (!carteira) { setStatus("Conecte sua carteira primeiro"); return }
+    if (!nome) { setStatus("Digite um nome de usuario"); return }
     setStatus("Registrando @" + nome + "...")
+    setTimeout(() => setStatus("Usuario @" + nome + " registrado!"), 1500)
   }
 
   const enviar = () => {
+    if (!carteira) { setStatus("Conecte sua carteira primeiro"); return }
+    if (!destinatario || !valor) { setStatus("Preencha todos os campos"); return }
     setStatus("Enviando " + valor + " SOL para @" + destinatario + "...")
+    setTimeout(() => setStatus("Enviado " + valor + " SOL para @" + destinatario), 1500)
   }
 
   return (
@@ -23,6 +50,15 @@ function App() {
           <h1>SendSol</h1>
           <p>Transferencias simples como Pix</p>
         </div>
+
+        {carteira ? (
+          <div className="carteira-info">
+            <span>Conectado: {carteira.slice(0,4)}...{carteira.slice(-4)}</span>
+            <span>{saldo.toFixed(2)} SOL</span>
+          </div>
+        ) : (
+          <button className="btn-principal" onClick={conectar}>Conectar Phantom</button>
+        )}
 
         <div className="abas">
           <button className={aba === "enviar" ? "aba ativa" : "aba"} onClick={() => setAba("enviar")}>Enviar</button>
@@ -43,7 +79,7 @@ function App() {
           <div className="form">
             <label>Escolha seu nome de usuario</label>
             <input placeholder="seu-nome" value={nome} onChange={e => setNome(e.target.value)} />
-            <p className="preview">Seu endereco: @{nome || "seu-nome"}</p>
+            <p className="preview">@{nome || "seu-nome"}</p>
             <button className="btn-principal" onClick={registrar}>Registrar</button>
           </div>
         )}
