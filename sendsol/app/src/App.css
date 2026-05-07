@@ -125,3 +125,34 @@ body {
   text-align: center;
   border: 1px solid #14F195;
 }
+
+.two-factor {
+  margin-top: 16px;
+  padding: 20px;
+  background: #f5f0ff;
+  border-radius: 14px;
+  border: 1px solid #9945FF;
+}
+
+.two-factor h3 {
+  text-align: center;
+  color: #9945FF;
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+.btn-secundario {
+  padding: 12px;
+  background: white;
+  color: #9945FF;
+  border: 2px solid #9945FF;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btn-secundario:hover {
+  background: #f5f0ff;
+}

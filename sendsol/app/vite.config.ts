@@ -16,7 +16,7 @@ export default defineConfig({
   },
   server: {
     headers: {
-      "Content-Security-Policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline' https:; object-src 'none';"
+      "Content-Security-Policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline' https: blob:; worker-src 'self' blob:; object-src 'none';"
     }
   }
 })

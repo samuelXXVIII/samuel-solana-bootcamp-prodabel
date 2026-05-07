@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Connection, PublicKey, LAMPORTS_PER_SOL, clusterApiUrl } from "@solana/web3.js"
 import "./App.css"
+import { TwoFactor } from "./TwoFactor"
 
 declare global {
   interface Window { solana?: any }
@@ -13,6 +14,7 @@ function App() {
   const [valor, setValor] = useState("")
   const [destinatario, setDestinatario] = useState("")
   const [status, setStatus] = useState("")
+  const [mostrar2FA, setMostrar2FA] = useState(false)
   const [saldo, setSaldo] = useState(0)
 
   const conectar = async () => {
@@ -33,7 +35,7 @@ function App() {
     if (!carteira) { setStatus("Conecte sua carteira primeiro"); return }
     if (!nome) { setStatus("Digite um nome de usuario"); return }
     setStatus("Registrando @" + nome + "...")
-    setTimeout(() => setStatus("Usuario @" + nome + " registrado!"), 1500)
+    setTimeout(() => setMostrar2FA(true), 1500)
   }
 
   const enviar = () => {
@@ -85,6 +87,17 @@ function App() {
         )}
 
         {status && <div className="status">{status}</div>}
+        {mostrar2FA && (
+          <TwoFactor
+            username={nome}
+            onVerified={() => {
+              setMostrar2FA(false)
+            }}
+            onCancel={() => {
+              setMostrar2FA(false)
+            }}
+          />
+        )}
       </div>
     </div>
   )
