@@ -1,12 +1,33 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
 body {
-  background: linear-gradient(135deg, #9945FF, #14F195);
+  background: #0a0a0f;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
+  font-family: "Inter", sans-serif;
+  overflow: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 20% 50%, rgba(153, 69, 255, 0.15) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 50%, rgba(20, 241, 149, 0.15) 0%, transparent 50%);
+  animation: bgMove 8s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes bgMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(30px, 20px); }
 }
 
 .app {
@@ -14,145 +35,225 @@ body {
   display: flex;
   justify-content: center;
   padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .card {
-  background: white;
-  border-radius: 20px;
-  padding: 30px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 32px;
   width: 100%;
-  max-width: 400px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  max-width: 420px;
+  box-shadow: 0 0 80px rgba(153, 69, 255, 0.15),
+              0 0 40px rgba(20, 241, 149, 0.05),
+              inset 0 1px 0 rgba(255,255,255,0.1);
+  animation: cardFloat 6s ease-in-out infinite;
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
 }
 
 .header {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .header h1 {
-  font-size: 28px;
-  color: #9945FF;
+  font-size: 32px;
   font-weight: 800;
+  background: linear-gradient(135deg, #9945FF, #14F195);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
 }
 
 .header p {
-  color: #888;
-  font-size: 14px;
-  margin-top: 4px;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.carteira-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(20, 241, 149, 0.05);
+  border: 1px solid rgba(20, 241, 149, 0.2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #14F195;
 }
 
 .abas {
   display: flex;
   gap: 8px;
   margin-bottom: 24px;
+  background: rgba(255,255,255,0.03);
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
 }
 
 .aba {
   flex: 1;
   padding: 10px;
-  border: 2px solid #eee;
-  border-radius: 10px;
-  background: white;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #888;
+  color: rgba(255,255,255,0.4);
+  transition: all 0.3s ease;
 }
 
 .aba.ativa {
-  border-color: #9945FF;
-  color: #9945FF;
-  background: #f5f0ff;
+  background: linear-gradient(135deg, rgba(153,69,255,0.3), rgba(20,241,149,0.2));
+  color: white;
+  box-shadow: 0 0 20px rgba(153,69,255,0.3);
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .form label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
-  color: #444;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .form input {
-  padding: 12px 16px;
-  border: 2px solid #eee;
-  border-radius: 10px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
   font-size: 16px;
+  color: white;
   outline: none;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
+}
+
+.form input::placeholder {
+  color: rgba(255,255,255,0.2);
 }
 
 .form input:focus {
-  border-color: #9945FF;
+  border-color: rgba(153,69,255,0.6);
+  background: rgba(153,69,255,0.08);
+  box-shadow: 0 0 20px rgba(153,69,255,0.15);
 }
 
 .preview {
   font-size: 13px;
-  color: #9945FF;
-  background: #f5f0ff;
-  padding: 8px 12px;
-  border-radius: 8px;
+  color: #14F195;
+  background: rgba(20,241,149,0.08);
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(20,241,149,0.2);
 }
 
 .btn-principal {
-  padding: 14px;
+  padding: 16px;
   background: linear-gradient(135deg, #9945FF, #14F195);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
+  border-radius: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-principal::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-principal:hover::before {
+  transform: translateX(100%);
 }
 
 .btn-principal:hover {
-  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(153,69,255,0.4);
+}
+
+.btn-principal:active {
+  transform: translateY(0);
 }
 
 .status {
   margin-top: 16px;
-  padding: 12px;
-  background: #f0fff8;
-  border-radius: 10px;
+  padding: 14px;
+  background: rgba(20,241,149,0.08);
+  border-radius: 12px;
   font-size: 14px;
-  color: #444;
+  color: #14F195;
   text-align: center;
-  border: 1px solid #14F195;
+  border: 1px solid rgba(20,241,149,0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .two-factor {
   margin-top: 16px;
   padding: 20px;
-  background: #f5f0ff;
+  background: rgba(153,69,255,0.08);
   border-radius: 14px;
-  border: 1px solid #9945FF;
+  border: 1px solid rgba(153,69,255,0.3);
 }
 
 .two-factor h3 {
   text-align: center;
-  color: #9945FF;
+  background: linear-gradient(135deg, #9945FF, #14F195);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 16px;
   font-size: 16px;
 }
 
 .btn-secundario {
-  padding: 12px;
-  background: white;
-  color: #9945FF;
-  border: 2px solid #9945FF;
+  padding: 14px;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 12px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   width: 100%;
+  transition: all 0.3s ease;
 }
 
 .btn-secundario:hover {
-  background: #f5f0ff;
+  border-color: rgba(153,69,255,0.4);
+  color: white;
 }
