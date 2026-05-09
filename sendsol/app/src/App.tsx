@@ -35,7 +35,8 @@ function App() {
     if (!carteira) { setStatus("Conecte sua carteira primeiro"); return }
     if (!nome) { setStatus("Digite um nome de usuario"); return }
     setStatus("Registrando @" + nome + "...")
-    setTimeout(() => setMostrar2FA(true), 1500)
+    setTimeout(() => setStatus("Registrando @" + nome + "...")
+    setTimeout(() => setMostrar2FA(true), 1000), 1500)
   }
 
   const enviar = () => {
