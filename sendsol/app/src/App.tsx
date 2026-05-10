@@ -34,16 +34,13 @@ function App() {
   const registrar = () => {
     if (!carteira) { setStatus("Conecte sua carteira primeiro"); return }
     if (!nome) { setStatus("Digite um nome de usuario"); return }
-    setStatus("Registrando @" + nome + "...")
-    setTimeout(() => setStatus("Registrando @" + nome + "...")
-    setTimeout(() => setMostrar2FA(true), 1000), 1500)
+    setStatus("Usuario @" + nome + " registrado com sucesso!")
   }
 
   const enviar = () => {
     if (!carteira) { setStatus("Conecte sua carteira primeiro"); return }
     if (!destinatario || !valor) { setStatus("Preencha todos os campos"); return }
-    setStatus("Enviando " + valor + " SOL para @" + destinatario + "...")
-    setTimeout(() => setStatus("Enviado " + valor + " SOL para @" + destinatario), 1500)
+    setMostrar2FA(true)
   }
 
   return (
